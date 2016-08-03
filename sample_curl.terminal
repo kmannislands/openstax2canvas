@@ -1,0 +1,1 @@
+curl 'https://canvas.instructure.com/api/v1/courses/1046762/files' \ -F 'name=test.png' \ -F 'size=966716' \ -F 'content_type=image/png' \ -F 'parent_folder_path=/Users/kieranjarrett/Desktop' \ -H 'Authorization: Bearer 7~BaGay2cGSbRcP1iEGEqhEvTms3rt7hlzRYzYauXAI39zuYhYr1MOlndirJpORmbj'

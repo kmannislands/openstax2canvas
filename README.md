@@ -6,7 +6,7 @@ Functional Node wrapper for the open source Canvas LMS REST API. All REST calls 
 * [canvas-lms.js](https://github.com/rockymadden/canvas-lms.js/): Functional Node wrapper for the open source Canvas LMS REST API
 
 ## Using
-First, create an API key on your installation of Canvas under user settings.
+First, create an [API key](https://canvas.instructure.com/doc/api/file.oauth.html#manual-token-generation) on your installation of Canvas under user settings.
 
 Next, create a config folder in the app's root directory and place a file named 'config.js' in that folder. The contents of config should be:
 

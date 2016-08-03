@@ -38,3 +38,6 @@ npm-debug.log
 
 # ignore config stuff to keep API keys, etc off git
 config/*
+
+# ignore cache as well
+cache/*
