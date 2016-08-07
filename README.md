@@ -13,7 +13,8 @@ Next, create a config folder in the app's root directory and place a file named 
 ```javascript
 var config = {
   canvas_url : "https://example.canvasinstallation.com",
-  canvas_api : "YOUR~API~KEY~sakjfbaksdjfbkj2409310iueakwn2"
+  canvas_api : "YOUR~API~KEY~", // get from canvas user settings
+  course_id: '1467136' // id of the course to upload to. Get from url bar
 };
 
 module.exports = config;
