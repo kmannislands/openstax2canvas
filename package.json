@@ -8,6 +8,7 @@
   "dependencies": {
     "canvas-lms.js": "^0.8.0",
     "cheerio": "^0.20.0",
+    "cloudinary": "^1.4.1",
     "curlrequest": "^0.5.7",
     "debug": "~2.2.0",
     "directory-tree": "^1.0.0",
