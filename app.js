@@ -147,12 +147,14 @@ function parseHTML(indexPath, callback) {
 
     // number pictures as figures
     $('figure').each(function () {
-      $(this).find('caption').prepend('<b class="fig-num" data-fig='+figCt+'> Figure ' + figCt + ': </b>');
-      $(this).find('caption').attr('style', 'float:left;clear:both;max-width:100%;');
-      figCt++;
-      var figCap = $(this).find('media').nextAll().html();
-      $(this).find('media').nextAll().remove();
-      $(this).append('<div class=caption style=width:100%;text-align:left;>'+figCap+'</div>');
+        if ($(this).find('caption').length) {
+        $(this).find('caption').prepend('<b class="fig-num" data-fig='+figCt+'> Figure ' + figCt + ': </b>');
+        $(this).find('caption').attr('style', 'float:left;clear:both;max-width:100%;');
+        figCt++;
+        var figCap = $(this).find('media').nextAll().html();
+        $(this).find('media').nextAll().remove();
+        $(this).append('<div class=caption style=width:100%;text-align:left;>'+figCap+'</div>');
+      }
     });
 
     // link embedded references to figures
