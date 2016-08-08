@@ -60,7 +60,7 @@ var replaceArr = {
   'emphasis': 'em',
   'title': 'h2',
   'md:content-url': 'canonical',
-  'link': 'a',
+  'link': 'embed',
   'quote': 'blockquote',
   'newline':'br'
 };
@@ -139,11 +139,10 @@ function parseHTML(indexPath, callback) {
     });
     // swap external links for proper anchor elements
     $('note').prepend('<hr>').append('<hr>');
-    $('note').find('a').each(function () {
+    $('note').find('embed').each(function () {
       var linkText = $(this).parent().html();
-      linkText = linkText.split('url').join('href');
+      linkText = linkText.split('url').join('href').split('embed').join('a');
       $(this).parent().replaceWith(linkText);
-      $(this).find('img').attr('style','max-height:30px;');
     });
 
     // number pictures as figures
@@ -157,11 +156,11 @@ function parseHTML(indexPath, callback) {
     });
 
     // link embedded references to figures
-    $('a').each(function () {
+    $('embed').each(function () {
         var corrsp = $(this).attr('target-id');
         if (corrsp === undefined) return;
         var figNum = $('figure#'+corrsp).find('b.fig-num').attr('data-fig');
-        $(this).replaceWith('<a href="#'+corrsp+'"> Figure '+ figNum + '</a>)');
+        $(this).replaceWith('<a href="#'+corrsp+'"> Figure '+ figNum + '</a>');
     });
     $('img').each(function () {
       $(this).attr('style','display:inline-block');
@@ -175,13 +174,17 @@ function parseHTML(indexPath, callback) {
 
     var noteCT = 0;
     $('note').each(function (content) {
+      if ($(this).find('h2').html().includes('Click and Explore')) $(this).find('img').attr('style', 'max-width:69px;');
       $(this).after('<div class=note id="note-'+noteCT+'" ></div>'); // make a spot for the Notes
       $('#note-'+noteCT++).html($(this).html()); // fill new div with note html
       $(this).remove(); // remove old note
     });
 
+    $('.summary').prepend('<hr>');
+    $('.review-questions').prepend('<hr>');
+
     // append attr text
-    $('content').append('<div><h2 class="medium-header">Attribution</h2><p><span>© May 18, 2016</span> <span><span class="list-comma">OpenStax</span>.</span> <span>Textbook content produced by <span><span class="list-comma">OpenStax</span></span> is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution License 4.0</a> license. </span></p><p>Download for free at <a href="http://cnx.org/contents/a7ba2fb8-8925-4987-b182-5f4429d48daa@3.30">http://cnx.org/contents/a7ba2fb8-8925-4987-b182-5f4429d48daa@3.30.</a></p></div>');
+    $('content').append('<div><hr><h2 class="medium-header">Attribution</h2><p><span>© May 18, 2016</span> <span><span class="list-comma">OpenStax</span>.</span> <span>Textbook content produced by <span><span class="list-comma">OpenStax</span></span> is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution License 4.0</a> license. </span></p><p>Download for free at <a href="http://cnx.org/contents/a7ba2fb8-8925-4987-b182-5f4429d48daa@3.30">http://cnx.org/contents/a7ba2fb8-8925-4987-b182-5f4429d48daa@3.30.</a></p></div>');
 
     var outStr = $('content').html();
     outStr = outStr.split(/"/g).join('');
