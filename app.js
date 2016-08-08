@@ -61,7 +61,8 @@ var replaceArr = {
   'title': 'h2',
   'md:content-url': 'canonical',
   'link': 'a',
-  'quote': 'blockquote'
+  'quote': 'blockquote',
+  'newline':'br'
 };
 
 function replacify(str, arr) {
@@ -166,15 +167,16 @@ function parseHTML(indexPath, callback) {
       $(this).attr('style','display:inline-block');
       $(this).parent('style', 'text-align:center');
     });
+
     // style abstract a little
     $('div.abstract').attr('style','background-color:#efefef;color:#232323;padding:30px;');
 
     $('figure').prepend('<hr>').append('<hr>');
 
     var noteCT = 0;
-    $('note').each(function () {
+    $('note').each(function (content) {
       $(this).after('<div class=note id="note-'+noteCT+'" ></div>'); // make a spot for the Notes
-      $('#note-'+noteCT).html($(this).html()); // fill new div with note html
+      $('#note-'+noteCT++).html($(this).html()); // fill new div with note html
       $(this).remove(); // remove old note
     });
 
