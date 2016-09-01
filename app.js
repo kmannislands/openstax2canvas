@@ -62,7 +62,9 @@ var replaceArr = {
   'md:content-url': 'canonical',
   'link': 'embed',
   'quote': 'blockquote',
-  'newline':'br'
+  'newline':'br',
+  'row': 'tr',
+  'entry': 'td'
 };
 
 function replacify(str, arr) {
@@ -87,7 +89,10 @@ function loadExtImgs(instance, spiderUrl, callback) {
     var $ = cheerio.load(stdout);
     var ImgUrls = [];
     $('img').each(function () {
-      ImgUrls.push(spiderUrl + $(this).attr('src'));
+      var compUrl = spiderUrl + $(this).attr('src');
+      // switch to a https for canvas mobile
+      compUrl = compUrl.split('http://').join('https://');
+      ImgUrls.push(compUrl);
     });
     callback(ImgUrls);
   });
@@ -168,6 +173,18 @@ function parseHTML(indexPath, callback) {
       $(this).attr('style','display:inline-block');
       $(this).parent('style', 'text-align:center');
     });
+
+    // swap table header for a thead
+    $('table h2').each(function () {
+      var th = $(this).html();
+      $(this).parent().prepend('<thead>'+th+'</thead>');
+    });
+
+    // style table
+    $('table td').attr('style', 'padding:8px;');
+    $('table thead').attr('style', 'font-weight:bold;text-align:center;');
+    $('table tbody tr').attr('style', 'border-top-style:solid;border-top-width:1px;border-top-color:#ccc;');
+    $('table tbody tr:nth-of-type(2n+1)').attr('style', 'border-top-style:solid;border-top-width:1px;border-top-color:#ccc;background-color:#efefef');
 
     // style abstract a little
     $('div.abstract').attr('style','background-color:#efefef;color:#232323;padding:30px;');
